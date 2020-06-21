@@ -7,5 +7,6 @@ namespace CasBlog.Models
 {
     public class Reader: User
     {
+        public List<Article> LikedArticles { get; set; }
     }
 }
