@@ -26,7 +26,27 @@ namespace CasBlog.Controllers
         // GET: BlogController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Author author = DemoBlogData().Articles.Where(article => article.Id == id).First().Author;
+            Article article = DemoBlogData().Articles.Where(article => article.Id == id).FirstOrDefault();
+            Reader reader = DemoBlogData().Readers.Where(reader => reader.LikedArticles.Contains(article)).FirstOrDefault();
+
+            var blogViewModel = new Blog()
+            {
+                Authors = new List<Author>()
+                {
+                    author
+                },
+                Articles = new List<Article>()
+                {
+                    article
+                },
+                Readers = new List<Reader>()
+                {
+                    reader
+                }
+            };
+
+            return View(blogViewModel);
         }
 
         private Blog DemoBlogData()
@@ -43,7 +63,25 @@ namespace CasBlog.Controllers
                     Name = "Author Authorius"
                 }
             };
-            var readers = new List<Reader>();
+            var readers = new List<Reader>()
+            {
+                new Reader()
+                {
+                    Id = 2,
+                    Email = "reader@email.nl",
+                    Password = "NotSoSecureAfterAll",
+                    LikedArticles = new List<Article>()
+                    {
+                        new Article()
+                        {
+                            Id = 1,
+                            Title = "First Blog Article, wow!",
+                            Content = "Lorem Ipsum is a great piece of default text used by many developers worldwide",
+                            Author = authors[0]
+                        },
+                    }
+                }
+            };
             var articles = new List<Article>()
             {
                 new Article()
@@ -57,13 +95,15 @@ namespace CasBlog.Controllers
                 {
                     Id = 2,
                     Title = "Second Blog Article, wow!",
-                    Content = "Lorem Ipsum used to be default text used by many developers worldwide, but not anymore!"
+                    Content = "Lorem Ipsum used to be default text used by many developers worldwide, but not anymore!",
+                    Author = authors[0]
                 },
                 new Article()
                 {
-                    Id = 1,
+                    Id = 3,
                     Title = "Third Blog Article, SAD!",
-                    Content = "Jina Jina Jina"
+                    Content = "Jina Jina Jina",
+                    Author = authors[0]
                 }
             };
 

@@ -15,6 +15,9 @@ namespace CasBlog.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(20, MinimumLength = 8)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
     }
 }
