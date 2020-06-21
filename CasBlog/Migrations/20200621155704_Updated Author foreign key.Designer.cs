@@ -4,14 +4,16 @@ using CasBlog.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CasBlog.Migrations
 {
     [DbContext(typeof(CasBlogContext))]
-    partial class CasBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20200621155704_Updated Author foreign key")]
+    partial class UpdatedAuthorforeignkey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,10 +77,6 @@ namespace CasBlog.Migrations
                     b.HasBaseType("CasBlog.Models.User");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -12,5 +12,8 @@ namespace CasBlog.Models
         public string Description { get; set; }
 
         public string ProfilePictureUrl { get; set; }
+
+        [Required]
+        public string Name { get; set; }
     }
 }

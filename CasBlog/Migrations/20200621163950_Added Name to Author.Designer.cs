@@ -4,14 +4,16 @@ using CasBlog.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CasBlog.Migrations
 {
     [DbContext(typeof(CasBlogContext))]
-    partial class CasBlogContextModelSnapshot : ModelSnapshot
+    [Migration("20200621163950_Added Name to Author")]
+    partial class AddedNametoAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

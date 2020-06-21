@@ -1,60 +1,24 @@
-﻿@model IEnumerable<CasBlog.Models.Article>
+﻿@model CasBlog.ViewModels.Blog
 
 @{ 
     ViewData["Title"] = "Blog";
 }
 
-    <div>
-        <h4>Blog</h4>
-        <hr />
+<div>
+    <h4>Blog</h4>
+    <hr />
+    @foreach(var article in Model.Articles)
+    {
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Title)
+                <a asp-action="Details" asp-route-id="@article.Id">
+                    @Html.DisplayFor(model => article.Title)
+                </a>
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Title)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Content)
+                @Html.DisplayFor(model => article.Content)<br />
+                Written by: @Html.DisplayFor(author => article.Author.Name)
             </dd>
         </dl>
-    </div>
-
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    }
+</div>
