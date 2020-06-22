@@ -1,0 +1,73 @@
+﻿@using Microsoft.AspNetCore.Http
+@model CasBlog.ViewModels.Blog
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    int cookieVal;
+    int.TryParse(
+        HttpContextAccessor.HttpContext.Request.Cookies["TimesViewed " + Model.Articles[0].Id]
+        , out cookieVal
+        );
+}
+
+<title>@ViewData["Title"]</title>
+<h1>@ViewData["Title"]</h1>
+@if (HttpContextAccessor.HttpContext.Session.GetInt32("TimesViewed " + Model.Articles[0].Id) > 1)
+{
+    <h3>You viewed this article 
+    @HttpContextAccessor.HttpContext.Session.GetInt32("TimesViewed " + Model.Articles[0].Id) 
+    times in this session</h3>
+}
+
+@if (cookieVal > 1)
+{
+    <h3>You viewed this article 
+    @HttpContextAccessor.HttpContext.Request.Cookies["TimesViewed " + Model.Articles[0].Id] 
+    times total!</h3>
+}
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="row">
+        @foreach (var article in Model.Articles)
+        {
+            <dt class="col-sm-2">
+                @article.Title
+            </dt>
+            <dd class="col-sm-10">
+                @article.Title
+            </dd>
+            <dt class="col-sm-2">
+                @article.Content
+            </dt>
+            <dd class="col-sm-10">
+                @article.Content
+            </dd>
+        }
+    </dl>
+    <hr />
+    <dl class="row">
+        @foreach (var author in Model.Authors)
+        {
+            <dt class="col-sm-2">
+                @author.Name
+            </dt>
+            <dd class="col-sm-10">
+                @author.Description
+            </dd>
+            <dt class="col-sm-2">
+                <img src="@author.ProfilePictureUrl"
+                     alt="User image for @author.Name"
+                     style="height: 100px; width:100px;" />
+            </dt>
+        }
+    </dl>
+    <hr />
+    <h5>@Model.Readers.Count() people liked this article</h5>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to Blog</a>
+</div>

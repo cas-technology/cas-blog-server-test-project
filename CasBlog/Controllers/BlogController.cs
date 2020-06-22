@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using CasBlog.DAL;
 using CasBlog.Models;
@@ -45,6 +46,38 @@ namespace CasBlog.Controllers
                     reader
                 }
             };
+
+            ViewData["Title"] = "Details for " + blogViewModel.Articles.First().Title;
+
+            var articleId = blogViewModel.Articles.First().Id;
+
+            var sessionViewCount = HttpContext.Session.GetInt32("TimesViewed " + articleId);
+            if (sessionViewCount >= 0)
+            {
+                HttpContext.Session.SetInt32("TimesViewed " + articleId, (int)(sessionViewCount + 1));
+            } else
+            {
+                HttpContext.Session.SetInt32("TimesViewed " + articleId, 1);
+            }
+
+            int cookieViewCount;
+            int.TryParse(HttpContext.Request.Cookies["TimesViewed " + articleId], out cookieViewCount);
+
+            int newCookieVal;
+            if (cookieViewCount >= 0)
+            {
+                newCookieVal = cookieViewCount + 1;
+            }
+            else
+            {
+                newCookieVal = 1;
+            }
+            var option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(7)
+            };
+
+            Response.Cookies.Append("TimesViewed " + articleId, newCookieVal.ToString(), option);
 
             return View(blogViewModel);
         }
